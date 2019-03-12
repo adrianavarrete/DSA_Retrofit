@@ -1,5 +1,6 @@
 package upc.dsa.tutorialapiandroid;
 
+import java.util.ArrayList;
 import java.util.List;
 import okhttp3.OkHttpClient;
 
@@ -11,7 +12,7 @@ import retrofit2.http.Path;
 
 interface GitHubService {
     @GET("repos/{owner}/{repo}/contributors")
-    Call<List<Contributor>> repoContributors(
+    Call<ArrayList<Contributor>> repoContributors(
             @Path("owner") String owner,
             @Path("repo") String repo);
 
