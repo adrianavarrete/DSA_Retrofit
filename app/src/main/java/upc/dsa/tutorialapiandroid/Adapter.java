@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
-    private ArrayList<Contributor> mDataSet;
+    private ArrayList<Track> mDataSet;
 
     // Obtener referencias de los componentes visuales para cada elemento
     // Es decir, referencias de los EditText, TextViews, Buttons
@@ -29,7 +29,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         mDataSet = new ArrayList<>();
     }
 
-    public void setDataSet(ArrayList<Contributor> dataSet){
+    public void setDataSet(ArrayList<Track> dataSet){
 
         mDataSet = dataSet;
         notifyDataSetChanged();
@@ -61,7 +61,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         // - obtenemos un elemento del dataset según su posición
         // - reemplazamos el contenido de los views según tales datos
 
-        holder.textView.setText(mDataSet.get(i).login);
+        holder.textView.setText(mDataSet.get(i).singer);
     }
 
     // Método que define la cantidad de elementos del RecyclerView

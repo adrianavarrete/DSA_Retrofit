@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.apache.log4j.Logger;
+
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +22,16 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final static Logger log = Logger.getLogger("Logger de Ejemplo");
+
+
     private Adapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         Button button = (Button) findViewById(R.id.button);
 
@@ -37,21 +44,23 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         button.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
+                log.info("hello there");
                 GitHubService gitHubService = GitHubService.retrofit.create(GitHubService.class);
-                Call<ArrayList<Contributor>> call = gitHubService.repoContributors("Microsoft", "Calculator");
+                Call<ArrayList<Track>> call = gitHubService.tracks();
 
-                call.enqueue(new Callback<ArrayList<Contributor>>() {
+                call.enqueue(new Callback<ArrayList<Track>>() {
                     @Override
-                    public void onResponse(Call<ArrayList<Contributor>> call, Response<ArrayList<Contributor>> response) {
+                    public void onResponse(Call<ArrayList<Track>> call, Response<ArrayList<Track>> response) {
 
-                        ArrayList<Contributor> contribudores = response.body();
-                        mAdapter.setDataSet(contribudores);
+                        ArrayList<Track> canciones = response.body();
+                        mAdapter.setDataSet(canciones);
 
                     }
                     @Override
-                    public void onFailure(Call<ArrayList<Contributor>> call, Throwable t) {
+                    public void onFailure(Call<ArrayList<Track>> call, Throwable t) {
                         final TextView textView = (TextView) findViewById(R.id.textView);
                         textView.setText("Something went wrong: " + t.getMessage());
                     }

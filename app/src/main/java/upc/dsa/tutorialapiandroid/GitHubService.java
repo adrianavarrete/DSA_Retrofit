@@ -11,15 +11,20 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 interface GitHubService {
-    @GET("repos/{owner}/{repo}/contributors")
+    @GET("tracks")
+    Call<ArrayList<Track>> tracks();
+
+    /*@GET("tracks/{owner}/{repo}/contributors")
     Call<ArrayList<Contributor>> repoContributors(
             @Path("owner") String owner,
             @Path("repo") String repo);
-
+*/
     public static Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("https://api.github.com/")
+            .baseUrl("http://147.83.7.203:8080/dsaApp/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
+
+
 }
 
 
