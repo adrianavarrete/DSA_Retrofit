@@ -4,14 +4,25 @@ package upc.dsa.tutorialapiandroid;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements View.OnClickListener {
     private ArrayList<Track> mDataSet;
+
+    private View.OnClickListener listener;
+
+    @Override
+    public void onClick(View view) {
+        if (listener!=null){
+            listener.onClick(view);
+        }
+
+    }
 
     // Obtener referencias de los componentes visuales para cada elemento
     // Es decir, referencias de los EditText, TextViews, Buttons
@@ -41,13 +52,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public Adapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
         // Creamos una nueva vista
-        TextView tv = (TextView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.adapter_view, parent, false);
+        TextView view = (TextView) LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.adapter_view, null, false);
+        view.setOnClickListener(this);
 
         // Aquí podemos definir tamaños, márgenes, paddings
         // ...
 
-        ViewHolder vh = new ViewHolder(tv);
+        ViewHolder vh = new ViewHolder(view);
         return vh;
     }
 
@@ -69,5 +81,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return mDataSet.size();
+    }
+
+    public void setOnClickListener(View.OnClickListener listener){
+        this.listener=listener;
     }
 }
