@@ -1,5 +1,6 @@
 package upc.dsa.tutorialapiandroid;
 
+import android.content.Intent;
 import android.media.audiofx.LoudnessEnhancer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
         mAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"hola",Toast.LENGTH_SHORT).show();
+                Intent miIntent = new Intent(MainActivity.this,SegundoActivity.class);
+
+                startActivity(miIntent);
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                log.info("hello there");
+
                 GitHubService gitHubService = GitHubService.retrofit.create(GitHubService.class);
                 Call<ArrayList<Track>> call = gitHubService.tracks();
 
@@ -69,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onFailure(Call<ArrayList<Track>> call, Throwable t) {
-                        final TextView textView = (TextView) findViewById(R.id.textView);
-                        textView.setText("Something went wrong: " + t.getMessage());
+
+                        Toast.makeText(getApplicationContext(),"Fallo con la petición de información",Toast.LENGTH_SHORT);
                     }
                 });
             }

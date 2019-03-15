@@ -73,7 +73,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
         // - obtenemos un elemento del dataset según su posición
         // - reemplazamos el contenido de los views según tales datos
 
-        holder.textView.setText(mDataSet.get(i).singer);
+        holder.textView.setText(mDataSet.get(i).getSinger() + " - " + mDataSet.get(i).getTitle());
     }
 
     // Método que define la cantidad de elementos del RecyclerView
