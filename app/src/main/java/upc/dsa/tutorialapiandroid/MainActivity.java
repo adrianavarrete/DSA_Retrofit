@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                GitHubService gitHubService = GitHubService.retrofit.create(GitHubService.class);
-                Call<ArrayList<Track>> call = gitHubService.tracks();
+                TrackAPI API = TrackAPI.retrofit.create(TrackAPI.class);
+                Call<ArrayList<Track>> call = API.tracks();
 
                 call.enqueue(new Callback<ArrayList<Track>>() {
                     @Override
