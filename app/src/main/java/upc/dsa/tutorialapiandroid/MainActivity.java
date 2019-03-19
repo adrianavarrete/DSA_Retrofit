@@ -11,26 +11,22 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.apache.log4j.Logger;
-
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final static Logger log = Logger.getLogger("Logger de Ejemplo");
-
-
-    private Adapter mAdapter;
+    private AdapterDatos mAdapter;
+    RecyclerView mRecyclerView;
+    private ArrayList<Track> listTrack;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -38,20 +34,14 @@ public class MainActivity extends AppCompatActivity {
 
         Button button = (Button) findViewById(R.id.button);
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this );
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        final Adapter mAdapter = new Adapter();
-        mAdapter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent miIntent = new Intent(MainActivity.this,SegundoActivity.class);
+        mAdapter = new AdapterDatos(listTrack,MainActivity.this);
 
-                startActivity(miIntent);
-            }
-        });
+
         mRecyclerView.setAdapter(mAdapter);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -66,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ArrayList<Track>> call, Response<ArrayList<Track>> response) {
 
-                        ArrayList<Track> canciones = response.body();
-                        mAdapter.setDataSet(canciones);
+                        listTrack = response.body();
+                        mAdapter.setDataSet(listTrack);
 
                     }
                     @Override
@@ -80,7 +70,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    }
+
+
+}
 
 
 
