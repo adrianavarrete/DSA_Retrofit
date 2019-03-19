@@ -1,5 +1,6 @@
 package upc.dsa.tutorialapiandroid;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.audiofx.LoudnessEnhancer;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private AdapterDatos mAdapter;
     RecyclerView mRecyclerView;
     private ArrayList<Track> listTrack;
+    Button recargar;
+    Button añadir;
 
     @Override
 
@@ -32,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        Button button = (Button) findViewById(R.id.button);
+        recargar = (Button) findViewById(R.id.recargarBtn);
+        añadir = (Button) findViewById(R.id.añadirBtn);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         mRecyclerView.setHasFixedSize(true);
@@ -44,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView.setAdapter(mAdapter);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        recargar.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -66,6 +70,16 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"Fallo con la petición de información",Toast.LENGTH_SHORT);
                     }
                 });
+            }
+        });
+
+       añadir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent añadirIntent = new Intent(MainActivity.this,TerceroActivity.class);
+                MainActivity.this.startActivity(añadirIntent);
+
+
             }
         });
 

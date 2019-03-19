@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -30,6 +31,14 @@ interface TrackAPI {
 
     @PUT("tracks")
     Call<Void> editTrack(
+            @Body Track track);
+
+    @DELETE("tracks/{id}")
+    Call<Void> deleteTrack(
+            @Path("id") String id);
+
+    @POST("tracks")
+    Call<Track> addTrack(
             @Body Track track);
 
 

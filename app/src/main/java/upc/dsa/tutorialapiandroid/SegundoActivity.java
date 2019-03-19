@@ -25,6 +25,7 @@ public class SegundoActivity extends AppCompatActivity {
     Button delete;
     TrackAPI API;
     Track track;
+    Intent adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,19 +38,22 @@ public class SegundoActivity extends AppCompatActivity {
         delete = (Button) findViewById(R.id.deleteBtn);
         API = TrackAPI.retrofit.create(TrackAPI.class);
 
-        Intent adapter = getIntent();
-        track = new Track(adapter.getStringExtra("trackId"));
 
-        Call<Track> call = API.track(track.getId());
+        adapter = getIntent();
+
+
+
+        Call<Track> call = API.track(adapter.getStringExtra("trackId"));
 
         call.enqueue(new Callback<Track>() {
             @Override
             public void onResponse(Call<Track> call, Response<Track> response) {
 
-                track.setSinger(response.body().getSinger());
-                track.setTitle(response.body().getTitle());
-                singer.setText(track.getSinger());
-                title.setText(track.getTitle());
+                singer.setText(response.body().getSinger());
+                title.setText(response.body().getTitle());
+
+                track = new Track(response.body().getTitle(), response.body().getSinger());
+                track.setId(adapter.getStringExtra("trackId"));
 
             }
 
@@ -65,30 +69,68 @@ public class SegundoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                track.setTitle(title.getText().toString());
-                track.setSinger(singer.getText().toString());
-
-                Call<Void> call = API.editTrack(track);
-
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-
-                        Toast.makeText(getApplicationContext(), "Editado Correctamente", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-
-                        Toast.makeText(getApplicationContext(), "Fallo con la petición de información", Toast.LENGTH_SHORT).show();
-                    }
-
-                });
-
-
+                editTrack(track);
 
             }
         });
 
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                deleteTrack(track.getId());
+
+            }
+
+
+        });
     }
+
+    public void deleteTrack(String id){
+        Call<Void> call = API.deleteTrack(id);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+                Toast.makeText(getApplicationContext(), "Eliminado Correctamente", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+                Toast.makeText(getApplicationContext(), "Fallo con la petición de información", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+    }
+
+    public void editTrack(Track track){
+
+        track.setTitle(title.getText().toString());
+        track.setSinger(singer.getText().toString());
+
+        Call<Void> call = API.editTrack(track);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+                Toast.makeText(getApplicationContext(), "Editado Correctamente", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+                Toast.makeText(getApplicationContext(), "Fallo con la petición de información", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+    }
+
+
 }

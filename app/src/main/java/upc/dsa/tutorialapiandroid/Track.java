@@ -6,10 +6,10 @@ public class Track {
     private String title;
     private String singer;
 
-    public Track(String id){
-        this.id = id;
-        this.singer = "";
-        this.singer = "";
+    public Track(String title, String singer){
+        this.id = null;
+        this.singer = singer;
+        this.title = title;
     }
 
     public String getId(){
